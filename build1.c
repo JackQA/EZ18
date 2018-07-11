@@ -11,8 +11,15 @@
 #define GRN   "\x1B[32m"
 #define YEL   "\x1B[33m"
 #define RESET "\x1B[0m"
+#define SUCCESS "\x1B[0m[\x1B[32mSUCCESS\x1B[0m] "
+#define INFO    "\x1B[0m[\x1B[33m INFO  \x1B[0m] "
+#define ERROR   "\x1B[0m[\x1B[31m ERROR \x1B[0m] "
 
 int welcomeSocket, newSocket, nBytes;
+
+void loopGame(char game[], int board[6][5]){
+  printf(board[][]);
+}
 
 
 int main() {
@@ -30,9 +37,9 @@ int main() {
   bind(welcomeSocket, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
 
   if (listen(welcomeSocket, 5) == 0) {
-    printf(GRN "Success" RESET " - Listening...\n");
+    printf(SUCCESS "Listening...\n");
   } else {
-    printf(RED "Error" RESET " - Unable to start server.\n");
+    printf(ERROR "Unable to start server.\n");
     exit(0);
   }
 
@@ -40,23 +47,28 @@ int main() {
   newSocket = accept(welcomeSocket, (struct sockaddr *) &serverStorage, &addr_size);
 
   if(newSocket<0){
-    printf(RED "Error" RESET " - Error on binding!\n");
+    printf(ERROR "Error on binding!\n");
     exit(0);
   }
   else{
-    printf(GRN "Success" RESET " - Client Attached.\n");
+    printf(SUCCESS "Client Attached.\n");
     char game[9];
+    int board[6][5];
     game[9] = '\0';
     recv(newSocket, game, 9, 0);
     printf("Message: %s\n", game);
     if (game[7] == '1'){
-      printf(YEL "Info" RESET " - Player must go first.\n");
+      printf(INFO "Player must go first.\n");
+      loopGame(game,board);
     } else {
-      printf(YEL "Info" RESET " - Bot must go first.\n");
+      printf(INFO "Bot must go first.\n");
+      recv(newSocket, game, 9, 0);
+      board[game[6]][5] = '1';
+      loopGame(game,board);
     }
 
   }
-  printf(YEL "Info" RESET " - Ending Session\n");
+  printf(INFO "Ending Session\n");
   sleep(1);
   close(newSocket);
   close(welcomeSocket);

@@ -45,6 +45,16 @@ int main() {
   }
   else{
     printf(GRN "Success" RESET " - Client Attached.\n");
+    char game[9];
+    game[9] = '\0';
+    recv(newSocket, game, 9, 0);
+    printf("Message: %s\n", game);
+    if (game[7] == '1'){
+      printf(YEL "Info" RESET " - Player must go first.\n");
+    } else {
+      printf(YEL "Info" RESET " - Bot must go first.\n");
+    }
+
   }
   printf(YEL "Info" RESET " - Ending Session\n");
   sleep(1);

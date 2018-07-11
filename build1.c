@@ -17,6 +17,13 @@
 
 int welcomeSocket, newSocket, nBytes;
 
+int board[6][5] = { {0,0,0,0,0},
+                       {0,0,0,0,0},
+                          {0,0,0,0,0},
+                            {0,0,0,0,0},
+                              {0,0,0,0,0},
+                                {0,0,0,0,0} };
+
 void loopGame(char game[], int board[6][5]){
   for(int y = 0; y <=6 ; y++) {
     for(int x = 0; x <= 5; x++) {
@@ -56,7 +63,6 @@ int main() {
   else{
     printf(SUCCESS "Client Attached.\n");
     char game[9];
-    int board[6][5];
     game[9] = '\0';
     recv(newSocket, game, 9, 0);
     printf("Message: %s\n", game);

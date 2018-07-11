@@ -18,9 +18,12 @@
 int welcomeSocket, newSocket, nBytes;
 
 void loopGame(char game[], int board[6][5]){
-  printf(board[][]);
+  for(int y = 0; y <=6 ; y++) {
+    for(int x = 0; x <= 5; x++) {
+      printf("%c ", board[x][y]);
+    }
+  }
 }
-
 
 int main() {
   srand(time(NULL));
